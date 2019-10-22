@@ -1,7 +1,7 @@
 <template>
   <div>
     asd
-    {{phraseId}}
+    {{url}}
     <button @click="redirectToRandomUrl">click</button>
   </div>
 </template>
@@ -37,10 +37,6 @@
           '#4E342E',
           '#424242',
           '#37474F'
-        ],
-        phraseId: this.$route.params.id,
-        m: [
-          { id: 'asd', title: 'asd-title' }
         ]
       }
     },
@@ -77,7 +73,7 @@
 
         this.randomColor()
 
-        let url = this.currentItem.url
+        const url = this.currentItem.url
         this.url = url
 
         this.$router.push({ path: '/m/' + url })
