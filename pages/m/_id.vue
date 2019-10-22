@@ -1,8 +1,50 @@
 <template>
-  <div>
-    asd
-    {{url}}
-    <button @click="redirectToRandomUrl">click</button>
+  <div class="main home">
+    <!--<transition name="fade-up">-->
+      <!--<div class="arrow-teacher-url-wrap" v-if="teacherUrl">-->
+        <!--<arrow-teacher>прямыми ссылками можно поделиться!</arrow-teacher>-->
+      <!--</div>-->
+    <!--</transition>-->
+
+    <div class="main-wrap container" :style="`background-color: ${currentColor}`">
+      <div class="phrase" @click="redirectToRandomUrl">
+        <transition name="fade" mode="out-in">
+          <div class="phrase-block" :key="currentItem.ID">
+            <h1 class="phrase-text">{{currentItem.text}}</h1>
+            <div class="phrase-info">
+              <span
+                v-if="currentItem.author"
+                class="phrase-info__text"
+              >Автор: {{currentItem.author}}</span>
+              <span
+                v-if="currentItem.source"
+                class="phrase-info__text"
+              >Источник: {{currentItem.source}}</span>
+            </div>
+          </div>
+        </transition>
+        <!--logo-->
+        <img class="phrase-logo" src="/img/logoasargsyan.png" alt="Aren Motivate">
+        <!--text-->
+        <h2 class="phrase-logo-text">Aren Motivate</h2>
+        <!--<transition name="fade">-->
+          <!--<div class="arrow-teacher-phrase-wrap" v-if="teacherPhrase">-->
+            <!--<arrow-teacher>Нажми и получай новую фразу</arrow-teacher>-->
+          <!--</div>-->
+        <!--</transition>-->
+      </div>
+
+      <div class="footer">
+        <div class="footer-adik">
+          <!--          место для рекламы-->
+        </div>
+        <div class="footer-social"></div>
+        <div class="footer-copyright">
+          <span>© Арен Мотивирует, 2019. <a href="mailto:aren.aren.97@mail.ru" target="_self">РЕКЛАМА&nbsp;НА&nbsp;САЙТЕ</a></span>
+          <span>Оригинальная идея - <a href="http://developerexcuses.com" target="_blank">developerexcuses.com</a></span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -10,9 +52,19 @@
   import { mapActions } from 'vuex'
   export default {
     name: "phrase",
+    head () {
+      return {
+        title: this.currentItem.text || 'Мотивационные фразы и призивы к действию',
+        titleTemplate: '%s - Aren Motivate',
+        meta: [
+          { name: 'twitter:title', content: `${this.currentItem.text} - Aren Motivate`  },
+          { itemprop: 'name', content: `${this.currentItem.text} - Aren Motivate`  },
+          { property: 'og:title', content: `${this.currentItem.text} - Aren Motivate` }
+        ]
+      }
+    },
     data () {
       return {
-        currentItem: {},
         teacherUrl: false,
         teacherPhrase: false,
         url: this.$route.params.id || '',
@@ -44,21 +96,19 @@
       phrases () {
         return this.$store.state.phrases.data
       },
-      randomPhrase () {
-        if (this.phrases) {
-          return this.randomNoRepeats(this.phrases)
-        }
-        return null
+      // currentItem меняется, когда меняется this.url
+      currentItem () {
+        return this.phrases.find( value => value.url === this.url ) || {}
       }
     },
     methods: {
       ...mapActions({ getPhrases: 'phrases/getPhrases'}),
       // Перебор по массиву, не повторяющиейся
-      randomNoRepeats(array) {
+      randomNoRepeats (array) {
         if (!array) return
         let copy = array.slice(0)
 
-        return function() {
+        return function () {
           if (copy.length < 1) { copy = array.slice(0); }
           let index = Math.floor(Math.random() * copy.length)
           let item = copy[index]
@@ -69,13 +119,12 @@
 
       // Получение случайного объекта фразы и Редирект на его урл
       redirectToRandomUrl () {
-        this.currentItem = this.randomPhrase()
+        const currentItem = this.randomNoRepeats(this.phrases)()
+        const url = currentItem.url
 
         this.randomColor()
 
-        const url = this.currentItem.url
         this.url = url
-
         this.$router.push({ path: '/m/' + url })
       },
 
@@ -91,9 +140,6 @@
       if (!this.phrases || !this.phrases.length) {
         this.getPhrases()
           .then(() => {
-            console.log(this.phrases)
-            this.currentItem = this.phrases.find( value => value.url === this.url ) || {}
-
             if (!this.url || (this.url && !Object.keys(this.currentItem).length)) {
               this.redirectToRandomUrl()
             } else {
@@ -108,6 +154,4 @@
   }
 </script>
 
-<style scoped>
-
-</style>
+<style src="./style.scss" lang="scss" scoped></style>

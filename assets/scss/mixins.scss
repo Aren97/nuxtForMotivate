@@ -1,0 +1,50 @@
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+}
+
+@mixin scr__pc {
+  @media (min-width: $scr__pc-sm) {
+    @content;
+  }
+}
+
+@mixin scr__pc-sm {
+  @media (min-width: $scr__tab) {
+    @content;
+  }
+}
+
+@mixin scr__tab {
+  @media (min-width: $scr__tab-sm) {
+    @content;
+  }
+}
+
+@mixin scr__tab-sm {
+  @media (min-width: $scr__mob) {
+    @content;
+  }
+}
+
+@mixin scr__mob {
+  @media (min-width: $scr__mob-sm) {
+    @content;
+  }
+}
+
+@mixin scr__mob-sm {
+  @media (min-width: $scr__mob-xs) {
+    @content;
+  }
+}

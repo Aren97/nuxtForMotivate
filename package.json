@@ -1,7 +1,7 @@
 {
   "name": "NuxtArenMotivate",
   "version": "1.0.0",
-  "description": "Nuxt Aren Motivate SSR",
+  "description": "Арен Мотивирует - площадка, для получения случайных мотивационных фраз. Зная, что случайностей не бывает, вы получите фразы, которые нужны именно вам в данный момент времени вашей жизни",
   "author": "a.sargsyan",
   "private": true,
   "scripts": {
@@ -12,8 +12,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nuxtjs/style-resources": "^1.0.0",
     "axios": "^0.19.0",
-    "nuxt": "^2.0.0"
+    "node-sass": "^4.12.0",
+    "nuxt": "^2.0.0",
+    "sass-loader": "^8.0.0"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",
