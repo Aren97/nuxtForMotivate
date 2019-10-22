@@ -154,4 +154,4 @@
   }
 </script>
 
-<style src="./style.scss" lang="scss"></style>
+<style src="~/assets/scss/components/phrase.scss" lang="scss"></style>

@@ -1,0 +1,86 @@
+.main-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  text-align: center;
+  color: $light;
+  transition: background-color .7s;
+}
+
+.arrow-teacher-url-wrap {
+  position: absolute;
+  left: 15%;
+  z-index: 2;
+}
+
+.arrow-teacher-phrase-wrap {
+  display: inline-block;
+}
+
+.phrase {
+  padding-top: 70px;
+  text-align: center;
+  cursor: pointer;
+
+  @include scr__pc-sm {
+    padding-top: 100px;
+  }
+}
+.phrase-text {
+  font-size: 20px;
+  cursor: pointer;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  @include scr__mob {
+    font-size: 26px;
+  }
+
+  @include scr__tab {
+    font-size: 32px;
+  }
+
+  @include scr__pc-sm {
+    font-size: 38px;
+  }
+}
+
+.phrase-info {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.phrase-info__text {
+  font-size: 12px;
+  color: $light3;
+
+  &:nth-child(2) {
+    margin-left: 6px;
+  }
+}
+
+.phrase-logo-text {
+  font-size: 20px;
+}
+.phrase-logo {
+  max-width: 100px;
+  margin: 20px auto;
+}
+
+.footer-copyright {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.footer {
+  width: 100%;
+}
+
