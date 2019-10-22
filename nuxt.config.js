@@ -23,10 +23,11 @@ export default {
   ** Global CSS
   */
   css: [
+    '~assets/scss/_main.scss'
   ],
   styleResources: {
     scss: [
-      '~/assets/scss/main.scss'
+      '~assets/scss/_main.scss'
     ]
   },
   /*
