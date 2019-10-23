@@ -1,10 +1,10 @@
 <template>
   <div class="main home">
-    <!--<transition name="fade-up">-->
-      <!--<div class="arrow-teacher-url-wrap" v-if="teacherUrl">-->
-        <!--<arrow-teacher>прямыми ссылками можно поделиться!</arrow-teacher>-->
-      <!--</div>-->
-    <!--</transition>-->
+    <transition name="fade-up">
+      <div class="arrow-teacher-url-wrap" v-if="teacherUrl">
+        <arrow-teacher>прямыми ссылками можно поделиться!</arrow-teacher>
+      </div>
+    </transition>
 
     <div class="main-wrap container" :style="`background-color: ${currentColor}`">
       <div class="phrase" @click="redirectToRandomUrl">
@@ -24,19 +24,19 @@
           </div>
         </transition>
         <!--logo-->
-        <!--<img class="phrase-logo" src="~/assets/img/logoasargsyan.png" alt="Aren Motivate">-->
+        <img class="phrase-logo" src="~/assets/img/logoasargsyan.png" alt="Aren Motivate">
         <!--text-->
         <h2 class="phrase-logo-text">Aren Motivate</h2>
-        <!--<transition name="fade">-->
-          <!--<div class="arrow-teacher-phrase-wrap" v-if="teacherPhrase">-->
-            <!--<arrow-teacher>Нажми и получай новую фразу</arrow-teacher>-->
-          <!--</div>-->
-        <!--</transition>-->
+        <transition name="fade">
+          <div class="arrow-teacher-phrase-wrap" v-if="teacherPhrase">
+            <arrow-teacher>Нажми и получай новую фразу</arrow-teacher>
+          </div>
+        </transition>
       </div>
 
       <div class="footer">
         <div class="footer-adik">
-          <!--          место для рекламы-->
+          <!--место для рекламы-->
         </div>
         <div class="footer-social"></div>
         <div class="footer-copyright">
@@ -49,7 +49,9 @@
 </template>
 
 <script>
+  import ArrowTeacher from '~/components/arrow-teacher'
   import { mapActions } from 'vuex'
+
   export default {
     transition: 'fade',
     name: "phrase",
@@ -91,6 +93,9 @@
           '#37474F'
         ]
       }
+    },
+    components: {
+      ArrowTeacher
     },
     computed: {
       phrases () {
@@ -148,6 +153,22 @@
       }
 
       this.randomColor()
+
+      if (!this.$getCookie('urlTeacher')) {
+        this.teacherUrl = true
+        this.$setCookie('urlTeacher', true)
+        setTimeout(() => {
+          this.teacherUrl = false
+        }, 3500)
+      }
+
+      if (!this.$getCookie('phraseTeacher')) {
+        this.teacherPhrase = true
+        this.$setCookie('phraseTeacher', true)
+        setTimeout(() => {
+          this.teacherPhrase = false
+        }, 3500)
+      }
     }
   }
 </script>
