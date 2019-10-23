@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
   state: () => ({
-    serverUrl: 'https://arenmotivate.ru/back/',
+    serverUrl: process.env.serverUrl,
     isDataLoading: false
   })
 }

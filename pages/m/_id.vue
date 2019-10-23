@@ -51,11 +51,11 @@
 <script>
   import { mapActions } from 'vuex'
   export default {
+    transition: 'fade',
     name: "phrase",
     head () {
       return {
         title: this.currentItem.text || 'Мотивационные фразы и призивы к действию',
-        titleTemplate: '%s - Aren Motivate',
         meta: [
           { name: 'twitter:title', content: `${this.currentItem.text} - Aren Motivate`  },
           { itemprop: 'name', content: `${this.currentItem.text} - Aren Motivate`  },
@@ -122,8 +122,6 @@
         const currentItem = this.randomNoRepeats(this.phrases)()
         const url = currentItem.url
 
-        this.randomColor()
-
         this.url = url
         this.$router.push({ path: '/m/' + url })
       },
@@ -142,14 +140,14 @@
           .then(() => {
             if (!this.url || (this.url && !Object.keys(this.currentItem).length)) {
               this.redirectToRandomUrl()
-            } else {
-              this.randomColor()
             }
           })
           .catch((error) => {
             console.error(error)
           })
       }
+
+      this.randomColor()
     }
   }
 </script>
