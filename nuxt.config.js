@@ -9,6 +9,9 @@ export default {
   ** Headers of the page
   */
   head: {
+    htmlAttrs: {
+      lang: 'ru',
+    },
     title: 'Мотивационные фразы и призивы к действию',
     titleTemplate: `%s - ${process.env.SITE_NAME}`,
     meta: [

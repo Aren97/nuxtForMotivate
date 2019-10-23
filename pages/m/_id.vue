@@ -41,7 +41,6 @@
         <div class="footer-social"></div>
         <div class="footer-copyright">
           <span>© Арен Мотивирует, 2019. <a href="mailto:aren.aren.97@mail.ru" target="_self">РЕКЛАМА&nbsp;НА&nbsp;САЙТЕ</a></span>
-          <span>Оригинальная идея - <a href="http://developerexcuses.com" target="_blank">developerexcuses.com</a></span>
         </div>
       </div>
     </div>
