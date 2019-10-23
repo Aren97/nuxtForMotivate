@@ -1,0 +1,40 @@
+@import './bootstrap-table.css';
+
+.admin {
+  padding: 20px;
+}
+.admin-add-phrase {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin-bottom: 26px;
+}
+.admin-btn {
+  display: inline-block;
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  color: $light3;
+  background-color: $green;
+}
+
+.admin-sign-in {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+}
+.admin-input {
+  border: 1px solid $green;
+  margin-bottom: 16px;
+}
+
+.clear-filter__btn {
+  display: inline-block;
+  border: 1px solid $dark;
+  border-radius: 0;
+  padding: 5px 10px;
+  color: $dark;
+  white-space: nowrap;
+  background-color: transparent;
+}
