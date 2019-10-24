@@ -159,21 +159,26 @@
       }
     },
     methods: {
-      ...mapActions('phrases', ['getPhrases', 'getFilters']),
-      ...mapActions('user', ['signIn']),
-      addPhrase () {
+      ...mapActions('phrases', ['getPhrases', 'getFilters', 'addPhrases']),
+      ...mapActions('user', ['signIn', 'autoLoginUser']),
+      async addPhrase () {
         if (this.phrase) {
           const phraseObj = {
             phrase: this.phrase,
             source: this.source,
             author: this.author
           }
-          this.$store.dispatch('addPhrases', phraseObj)
-          .then ((response) => {
-            if (!response.dbQuery) {
-              this.error = response.text
-            }
-          })
+          try {
+            await this.addPhrases(phraseObj)
+            .then ((response) => {
+              if (!response.dbQuery) {
+                this.error = response.text
+              }
+            })
+          } catch (e) {
+            this.error = e
+          }
+
         } else {
           this.error = 'Текст пустой'
         }
@@ -188,7 +193,6 @@
           } catch (e) {
             this.error = e
           }
-
         } else {
           this.error = 'Не введен логин или пароль'
         }
@@ -205,7 +209,7 @@
       ...mapGetters('user', ['isLoggined', 'isUserDataLoading']),
       ...mapState('phrases', { phrases: 'data', filters: 'filters' }),
       // Все фильтры работают в изоляции друг от друга. Может быть нужно будет потом добавть связка между поиском и селектами
-      filteredPhrases: function () {
+      filteredPhrases () {
         if (!(this.searchInput || this.filterValue.author !== 'Автор' || this.filterValue.source !== 'Источник')) {
           return this.phrases
         } else {

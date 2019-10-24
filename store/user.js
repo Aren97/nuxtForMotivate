@@ -36,7 +36,6 @@ export default {
           Axios
             .post(rootState.api.serverUrl + 'signIn.php', payload)
             .then((response) => {
-              console.log('response', response)
               response = response.data
 
               if (!response.notFound) {
@@ -53,14 +52,13 @@ export default {
 
                 commit('userDataSet', JSON.parse(userData))
               }
-
+              resolve(response)
             })
             .catch((error) => {
               console.error(error)
               reject(error)
             })
             .finally(() => {
-              console.log(22)
               commit('setIsUserDataLoading', false)
             })
         })
@@ -71,7 +69,7 @@ export default {
       }
 
     },
-    nuxtServerInit ({commit, rootState}, payload) {
+    autoLoginUser ({commit, rootState}, payload) {
       return new Promise((resolve, reject) => {
 
         commit('setIsUserDataLoading', true)
