@@ -1,5 +1,5 @@
 export default function ({ store, redirect }) {
-  if (store.state.user.isLoggined) {
+  if (store.state.localStorage.loggedIn) {
     return redirect('/admin')
   }
 }

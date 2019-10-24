@@ -75,7 +75,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    'nuxt-vuex-localstorage'
   ],
   /*
   ** Build configuration

@@ -1,5 +1,7 @@
 <template>
   <div class="main login">
+    {{user}}
+    {{loggedIn}}
     <form
       class="admin-sign-in"
       @submit.prevent="login"
@@ -24,7 +26,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     name: "login",
@@ -37,6 +39,9 @@
           pass: ''
         }
       }
+    },
+    computed: {
+      ...mapState('localStorage', ['user', 'loggedIn'])
     },
     methods: {
       ...mapActions('user', ['signIn']),

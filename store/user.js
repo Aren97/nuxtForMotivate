@@ -1,6 +1,7 @@
 import Axios from "axios"
 
 export default {
+  namespaced: true,
   state: () => ({
     isLoggined: false,
     token: '',
@@ -45,11 +46,15 @@ export default {
                 }
 
                 userData = JSON.stringify(userData)
-                localStorage.removeItem('user-token')
                 localStorage.removeItem('user')
-                localStorage.setItem('user-token', response.token)
+                // rootState.localStorage.user = null
+                commit('localStorage/setUserLocalStorage', null, { root: true })
+                // localStorage.setItem('user-token', response.token)
+                // rootState.localStorage.user = userData
+                commit('localStorage/setUserLocalStorage', userData, { root: true })
                 localStorage.user = userData
 
+                commit('localStorage/setUserLoggedIn', true, { root: true })
                 commit('userDataSet', JSON.parse(userData))
               }
               resolve(response)
@@ -63,9 +68,10 @@ export default {
             })
         })
       } else {
-        localStorage.removeItem('user-token')
+        commit('localStorage/setUserLocalStorage', null, { root: true })
         localStorage.removeItem('user')
         commit('userDataSet')
+        commit('localStorage/setUserLoggedIn', false, { root: true })
       }
 
     },
@@ -77,6 +83,8 @@ export default {
         const user = JSON.parse(payload.user)
         const token = user.token
         const user_id = user.id
+
+        console.log('user', user)
 
         Axios
           .post(rootState.api.serverUrl + 'checkToken.php', {token, user_id})
@@ -91,7 +99,7 @@ export default {
           })
           .catch(err => {
             commit('userDataSet');
-            localStorage.removeItem('user-token')
+            commit('localStorage/setUserLocalStorage', null, { root: true })
             localStorage.removeItem('user')
             reject(err)
           })
