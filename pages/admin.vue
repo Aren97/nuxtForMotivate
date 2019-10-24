@@ -14,7 +14,6 @@
         </div>
 
         <!--Добавление фраз-->
-
         <form
           v-if="addPhraseTab"
           class="admin-add-phrase"
@@ -103,27 +102,6 @@
         </div>
 
       </div>
-
-      <form
-        v-else
-        class="admin-sign-in"
-        @submit.prevent="login"
-      >
-        <input
-          class="admin-input"
-          type="text"
-          name="login"
-          v-model="userSignIn.login"
-        >
-        <input
-          class="admin-input"
-          type="password"
-          name="password"
-          v-model="userSignIn.pass"
-        >
-        <button class="admin-btn" type="submit">Sign In</button>
-      </form>
-
       <br>
       <div style="color: crimson">{{error}}</div>
     </div>
@@ -137,6 +115,7 @@
 
   export default {
     name: "admin",
+    middleware: 'auth',
     components: {
       PhraseItem
     },
@@ -148,10 +127,6 @@
         error: '',
         addPhraseTab: false,
         searchInput: '',
-        userSignIn: {
-          login: '',
-          pass: ''
-        },
         filterValue: {
           author: 'Автор',
           source: 'Источник'
@@ -160,7 +135,6 @@
     },
     methods: {
       ...mapActions('phrases', ['getPhrases', 'getFilters', 'addPhrases']),
-      ...mapActions('user', ['signIn', 'autoLoginUser']),
       async addPhrase () {
         if (this.phrase) {
           const phraseObj = {
@@ -185,17 +159,6 @@
         this.phrase = ''
         this.source = ''
         this.author = ''
-      },
-      async login () {
-        if (this.userSignIn.login && this.userSignIn.pass) {
-          try {
-            await this.signIn(this.userSignIn)
-          } catch (e) {
-            this.error = e
-          }
-        } else {
-          this.error = 'Не введен логин или пароль'
-        }
       },
       clearFilter () {
         this.filterValue = {
