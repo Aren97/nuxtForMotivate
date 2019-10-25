@@ -1,7 +1,5 @@
 <template>
   <div class="main login">
-    {{user}}
-    {{loggedIn}}
     <form
       class="admin-sign-in"
       @submit.prevent="login"
@@ -26,8 +24,6 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
-
   export default {
     name: "login",
     middleware: 'guest',
@@ -40,23 +36,18 @@
         }
       }
     },
-    computed: {
-      ...mapState('localStorage', ['user', 'loggedIn'])
-    },
     methods: {
-      ...mapActions('user', ['signIn']),
       async login () {
-        if (this.userSignIn.login && this.userSignIn.pass) {
-          try {
-            let result = await this.signIn(this.userSignIn)
-            if (result && result.ID) {
-              this.$router.push('/admin')
+        try {
+          await this.$auth.loginWith('local', {
+            data: {
+              login: this.userSignIn.login,
+              password: this.userSignIn.pass
             }
-          } catch (e) {
-            this.error = e
-          }
-        } else {
-          this.error = 'Не введен логин или пароль'
+          })
+          this.$router.push('/admin')
+        } catch (e) {
+          this.error = e
         }
       }
     }

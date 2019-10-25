@@ -5,6 +5,22 @@ export default {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
     serverUrl: 'https://arenmotivate.ru/back/'
   },
+  axios: {
+    baseURL: 'https://arenmotivate.ru/back/'
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'signIn.php', method: 'post', propertyName: 'token' },
+          user: false,
+          logout: false
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    }
+  },
   /*
   ** Headers of the page
   */
@@ -76,7 +92,8 @@ export default {
   */
   modules: [
     '@nuxtjs/style-resources',
-    'nuxt-vuex-localstorage'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
   /*
   ** Build configuration

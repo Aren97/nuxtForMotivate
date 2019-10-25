@@ -1,11 +1,8 @@
 <template>
   <div class="main admin">
-    <div v-if="isUserDataLoading" class="admin-loading">
-      Loading...
-    </div>
-    <div v-else class="admin-loaded">
+    <div class="admin-loaded">
       <div
-        v-if="isLoggined"
+        v-if="isAuthenticated"
         class="admin-logined"
       >
         <div class="form-check mb-40">
@@ -169,7 +166,7 @@
       }
     },
     computed: {
-      ...mapGetters('user', ['isLoggined', 'isUserDataLoading']),
+      ...mapGetters(['isAuthenticated']),
       ...mapState('phrases', { phrases: 'data', filters: 'filters' }),
       // Все фильтры работают в изоляции друг от друга. Может быть нужно будет потом добавть связка между поиском и селектами
       filteredPhrases () {
