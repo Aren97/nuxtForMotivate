@@ -113,6 +113,13 @@
   export default {
     name: "admin",
     middleware: 'auth',
+    head () {
+      return {
+        meta: [
+          { name: 'robots', content: 'noindex, nofollow' }
+        ]
+      }
+    },
     components: {
       PhraseItem
     },

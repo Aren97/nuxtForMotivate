@@ -27,6 +27,13 @@
   export default {
     name: "login",
     middleware: 'guest',
+    head () {
+      return {
+        meta: [
+          { name: 'robots', content: 'noindex, nofollow' }
+        ]
+      }
+    },
     data() {
       return {
         error: null,
