@@ -3,11 +3,10 @@ const axios = require('axios')
 export default {
   mode: 'universal',
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-    serverUrl: 'https://arenmotivate.ru/back/'
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
   },
   axios: {
-    baseURL: 'https://arenmotivate.ru/back/'
+    baseURL: process.env.SERVER_URL
   },
   auth: {
     strategies: {
@@ -110,7 +109,7 @@ export default {
   */
   generate: {
     routes: function () {
-      return axios.get('https://arenmotivate.ru/back/phrases.php')
+      return axios.get(process.env.SERVER_URL + 'phrases.php')
       .then((res) => {
         return res.data.map(page => `/m/${page.url}`)
       })
@@ -121,14 +120,14 @@ export default {
   */
   sitemap: {
     generate: true,
-    hostname: 'https://arenmotivate.ru',
+    hostname: process.env.BASE_URL,
     path: '../static/sitemap.xml',
     exclude: [
       '/login',
       '/admin'
     ],
     routes: async () => {
-      const { data } = await axios.get('https://arenmotivate.ru/back/phrases.php')
+      const { data } = await axios.get(process.env.SERVER_URL + 'phrases.php')
       return data.map(phrase => `/m/${phrase.url}`)
     }
   },
