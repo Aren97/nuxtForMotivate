@@ -1,9 +1,26 @@
 require('dotenv').config()
+const axios = require('axios')
 export default {
   mode: 'universal',
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
     serverUrl: 'https://arenmotivate.ru/back/'
+  },
+  axios: {
+    baseURL: 'https://arenmotivate.ru/back/'
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'signIn.php', method: 'post', propertyName: 'token' },
+          user: false,
+          logout: false
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    }
   },
   /*
   ** Headers of the page
@@ -18,6 +35,7 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { hid: 'yandex-verification', name: 'yandex-verification', content: 'a459fa822922407b' },
       { property: 'og:site_name', content: process.env.SITE_NAME },
       // The list of types is available here: http://ogp.me/#types
       { property: 'og:type', content: 'website' },
@@ -75,8 +93,45 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+    '@nuxtjs/sitemap',
+    [
+      '@nuxtjs/yandex-metrika',
+      {
+        id: '55139074',
+        webvisor: true
+      }
+    ]
   ],
+  /*
+  ** Generate routes
+  */
+  generate: {
+    routes: function () {
+      return axios.get('https://arenmotivate.ru/back/phrases.php')
+      .then((res) => {
+        return res.data.map(page => `/m/${page.url}`)
+      })
+    }
+  },
+  /*
+  ** Generate sitemap
+  */
+  sitemap: {
+    generate: true,
+    hostname: 'https://arenmotivate.ru',
+    path: '../static/sitemap.xml',
+    exclude: [
+      '/login',
+      '/admin'
+    ],
+    routes: async () => {
+      const { data } = await axios.get('https://arenmotivate.ru/back/phrases.php')
+      return data.map(phrase => `/m/${phrase.url}`)
+    }
+  },
   /*
   ** Build configuration
   */

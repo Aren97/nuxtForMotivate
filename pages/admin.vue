@@ -1,11 +1,8 @@
 <template>
   <div class="main admin">
-    <div v-if="isUserDataLoading" class="admin-loading">
-      Loading...
-    </div>
-    <div v-else class="admin-loaded">
+    <div class="admin-loaded">
       <div
-        v-if="isLoggined"
+        v-if="isAuthenticated"
         class="admin-logined"
       >
         <div class="form-check mb-40">
@@ -14,7 +11,6 @@
         </div>
 
         <!--Добавление фраз-->
-
         <form
           v-if="addPhraseTab"
           class="admin-add-phrase"
@@ -103,27 +99,6 @@
         </div>
 
       </div>
-
-      <form
-        v-else
-        class="admin-sign-in"
-        @submit.prevent="login"
-      >
-        <input
-          class="admin-input"
-          type="text"
-          name="login"
-          v-model="userSignIn.login"
-        >
-        <input
-          class="admin-input"
-          type="password"
-          name="password"
-          v-model="userSignIn.pass"
-        >
-        <button class="admin-btn" type="submit">Sign In</button>
-      </form>
-
       <br>
       <div style="color: crimson">{{error}}</div>
     </div>
@@ -137,6 +112,14 @@
 
   export default {
     name: "admin",
+    middleware: 'auth',
+    head () {
+      return {
+        meta: [
+          { name: 'robots', content: 'noindex, nofollow' }
+        ]
+      }
+    },
     components: {
       PhraseItem
     },
@@ -148,10 +131,6 @@
         error: '',
         addPhraseTab: false,
         searchInput: '',
-        userSignIn: {
-          login: '',
-          pass: ''
-        },
         filterValue: {
           author: 'Автор',
           source: 'Источник'
@@ -160,7 +139,6 @@
     },
     methods: {
       ...mapActions('phrases', ['getPhrases', 'getFilters', 'addPhrases']),
-      ...mapActions('user', ['signIn', 'autoLoginUser']),
       async addPhrase () {
         if (this.phrase) {
           const phraseObj = {
@@ -186,17 +164,6 @@
         this.source = ''
         this.author = ''
       },
-      async login () {
-        if (this.userSignIn.login && this.userSignIn.pass) {
-          try {
-            await this.signIn(this.userSignIn)
-          } catch (e) {
-            this.error = e
-          }
-        } else {
-          this.error = 'Не введен логин или пароль'
-        }
-      },
       clearFilter () {
         this.filterValue = {
           author: 'Автор',
@@ -206,7 +173,7 @@
       }
     },
     computed: {
-      ...mapGetters('user', ['isLoggined', 'isUserDataLoading']),
+      ...mapGetters(['isAuthenticated']),
       ...mapState('phrases', { phrases: 'data', filters: 'filters' }),
       // Все фильтры работают в изоляции друг от друга. Может быть нужно будет потом добавть связка между поиском и селектами
       filteredPhrases () {

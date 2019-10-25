@@ -58,7 +58,8 @@
       return {
         title: this.currentItem.text || 'Мотивационные фразы и призивы к действию',
         meta: [
-          { name: 'twitter:title', content: `${this.currentItem.text} - Aren Motivate`  },
+          { hid: 'robots', name: 'robots', content: 'index, nofollow' },
+          { hid: 'twitter:title', name: 'twitter:title', content: `${this.currentItem.text} - Aren Motivate`  },
           { itemprop: 'name', content: `${this.currentItem.text} - Aren Motivate`  },
           { property: 'og:title', content: `${this.currentItem.text} - Aren Motivate` }
         ]
@@ -146,7 +147,7 @@
               this.redirectToRandomUrl()
             }
           })
-          .catch((error) => {
+          .catch((error) => {+
             console.error(error)
           })
       }
