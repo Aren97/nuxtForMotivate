@@ -47,7 +47,7 @@
 
 <script>
   import ArrowTeacher from '~/components/arrow-teacher'
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     name: "phrase",
@@ -100,9 +100,7 @@
       ArrowTeacher
     },
     computed: {
-      phrases () {
-        return this.$store.state.phrases.data
-      },
+      ...mapState('phrases', { phrases: 'data' }),
       // currentItem меняется, когда меняется this.url
       currentItem () {
         return this.phrases.find( value => value.url === this.url ) || {}
@@ -142,6 +140,7 @@
     },
     mounted () {
       // Получаем фразы
+
       if (!this.phrases || !this.phrases.length) {
         this.getPhrases()
           .then(() => {

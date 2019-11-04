@@ -86,7 +86,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv'
   ],
   /*
   ** Nuxt.js modules
