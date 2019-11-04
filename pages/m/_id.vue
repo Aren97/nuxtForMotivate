@@ -8,21 +8,19 @@
 
     <div class="main-wrap container" :style="`background-color: ${currentColor}`">
       <div class="phrase" @click="redirectToRandomUrl">
-        <transition name="fade" mode="out-in">
-          <div class="phrase-block" :key="currentItem.ID">
-            <h1 class="phrase-text">{{currentItem.text}}</h1>
-            <div class="phrase-info">
-              <span
-                v-if="currentItem.author"
-                class="phrase-info__text"
-              >Автор: {{currentItem.author}}</span>
-              <span
-                v-if="currentItem.source"
-                class="phrase-info__text"
-              >Источник: {{currentItem.source}}</span>
-            </div>
+        <div class="phrase-block" :key="currentItem.ID">
+          <h1 class="phrase-text">{{currentItem.text}}</h1>
+          <div class="phrase-info">
+            <span
+              v-if="currentItem.author"
+              class="phrase-info__text"
+            >Автор: {{currentItem.author}}</span>
+            <span
+              v-if="currentItem.source"
+              class="phrase-info__text"
+            >Источник: {{currentItem.source}}</span>
           </div>
-        </transition>
+        </div>
         <!--logo-->
         <img class="phrase-logo" src="~/assets/img/logoasargsyan.png" alt="Aren Motivate">
         <!--text-->
@@ -52,7 +50,6 @@
   import { mapActions } from 'vuex'
 
   export default {
-    transition: 'fade',
     name: "phrase",
     head () {
       return {
@@ -75,8 +72,11 @@
           '#C62828',
           '#AD1457',
           '#6A1B9A',
+          '#574b90',
           '#4527A0',
           '#283593',
+          '#778beb',
+          '#3dc1d3',
           '#1565C0',
           '#0277BD',
           '#00838F',
@@ -87,7 +87,9 @@
           '#F9A825',
           '#FF8F00',
           '#EF6C00',
+          '#e15f41',
           '#D84315',
+          '#e66767',
           '#4E342E',
           '#424242',
           '#37474F'
