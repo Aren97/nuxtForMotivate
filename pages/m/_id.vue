@@ -62,6 +62,12 @@
         ]
       }
     },
+    async fetch ({store}) {
+      // Получаем фразы
+      if (!store.state.phrases.data.length) {
+        const { data } = await store.dispatch('phrases/getPhrases')
+      }
+    },
     data () {
       return {
         teacherUrl: false,
@@ -139,18 +145,8 @@
       }
     },
     mounted () {
-      // Получаем фразы
-
-      if (!this.phrases || !this.phrases.length) {
-        this.getPhrases()
-          .then(() => {
-            if (!this.url || (this.url && !Object.keys(this.currentItem).length)) {
-              this.redirectToRandomUrl()
-            }
-          })
-          .catch((error) => {
-            console.error(error)
-          })
+      if (!this.url || (this.url && !Object.keys(this.currentItem).length)) {
+        this.redirectToRandomUrl()
       }
 
       this.randomColor()
@@ -160,7 +156,7 @@
         this.$setCookie('urlTeacher', true)
         setTimeout(() => {
           this.teacherUrl = false
-        }, 3500)
+        }, 7000)
       }
 
       if (!this.$getCookie('phraseTeacher')) {
@@ -168,7 +164,7 @@
         this.$setCookie('phraseTeacher', true)
         setTimeout(() => {
           this.teacherPhrase = false
-        }, 3500)
+        }, 7000)
       }
     }
   }
